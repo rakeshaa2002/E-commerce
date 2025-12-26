@@ -126,15 +126,12 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
+import dj_database_url
+
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': os.environ.get('DB_NAME', 'ecommerce_db'),
-        'USER': os.environ.get('DB_USER', 'Rakesh'),
-        'PASSWORD': os.environ.get('DB_PASSWORD', 'since2002'),
-        'HOST': os.environ.get('DB_HOST', '127.0.0.1'),
-        'PORT': os.environ.get('DB_PORT', '3307'),
-    }
+    'default': dj_database_url.config(
+        default=f"mysql://{os.environ.get('DB_USER', 'Rakesh')}:{os.environ.get('DB_PASSWORD', 'since2002')}@{os.environ.get('DB_HOST', '127.0.0.1')}:{os.environ.get('DB_PORT', '3307')}/{os.environ.get('DB_NAME', 'ecommerce_db')}"
+    )
 }
 
 
