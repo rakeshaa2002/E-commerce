@@ -107,11 +107,22 @@ header .form-control {
   border-radius: 20px 0 0 20px;
 }
 
+.light-theme header .form-control {
+  background-color: #f8f9fa;
+  border-color: #ced4da;
+  color: #212529;
+}
+
 header .form-control:focus {
   background-color: rgba(255, 255, 255, 0.15);
   border-color: var(--accent);
   color: var(--text-primary);
   box-shadow: none;
+}
+
+.light-theme header .form-control:focus {
+  background-color: #fff;
+  color: #212529;
 }
 
 header .btn-outline-success {
@@ -120,9 +131,20 @@ header .btn-outline-success {
   color: var(--text-primary);
 }
 
+.light-theme header .btn-outline-success {
+  border-color: #ced4da;
+  color: #212529;
+}
+
 header .btn-outline-success:hover {
   background-color: var(--accent);
   border-color: var(--accent);
+  color: #fff;
+}
+
+/* Ensure navbar links use the primary text color */
+.navbar-nav .nav-link {
+  color: var(--text-primary) !important;
 }
 
 /* Carousel Styles */
@@ -317,11 +339,16 @@ h1::after {
 
 /* ... existing styles ... */
 
-/* Dark Theme Form Controls */
+
+/* Form Controls */
 .form-control {
   background-color: var(--bg-secondary);
   border: 1px solid rgba(255, 255, 255, 0.1);
   color: var(--text-primary);
+}
+
+.light-theme .form-control {
+  border: 1px solid rgba(0, 0, 0, 0.1);
 }
 
 .form-control:focus {
@@ -332,11 +359,14 @@ h1::after {
 }
 
 /* List Groups */
-/* List Groups */
 .list-group-item {
   background-color: var(--bg-secondary);
   color: var(--text-primary);
   border-color: rgba(255, 255, 255, 0.1);
+}
+
+.light-theme .list-group-item {
+  border-color: rgba(0, 0, 0, 0.1);
 }
 
 /* Fix Headings Visibility */
@@ -352,7 +382,6 @@ h6 {
 /* Fix Alert Visibility */
 .alert-info {
   background-color: rgba(31, 128, 224, 0.2);
-  /* Translucent Blue */
   color: var(--text-primary);
   border-color: var(--accent);
 }
@@ -363,13 +392,25 @@ h6 {
   border-color: #dc3545;
 }
 
+.light-theme .alert-danger {
+  color: #721c24;
+  background-color: #f8d7da;
+  border-color: #f5c6cb;
+}
+
 .alert-success {
   background-color: rgba(40, 167, 69, 0.2);
   color: #98eeb1;
   border-color: #28a745;
 }
 
+.light-theme .alert-success {
+  color: #155724;
+  background-color: #d4edda;
+  border-color: #c3e6cb;
+}
+
 .alert a {
-  color: white;
+  color: inherit;
   text-decoration: underline;
 }

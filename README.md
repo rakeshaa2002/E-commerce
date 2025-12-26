@@ -1,15 +1,15 @@
-<h1 align="center">WatchKart</h1>
+<h1 align="center">VibeKart</h1>
 <h2 align="center">High-Quality Watches for Everyone</h2>
 
 <p align="center">
-  A premium E-Commerce platform dedicated to watches, built with the power of Django and React.
+  A premium E-Commerce platform built with the power of Django and React.
 </p>
 
 ---
 
 ## 🚀 About the Project
 
-WatchKart is a fully functional e-commerce application designed to provide a seamless shopping experience for watch enthusiasts. It features a modern, responsive user interface and a robust backend to handle products, users, orders, and payments.
+VibeKart is a fully functional e-commerce application designed to provide a seamless shopping experience. It features a modern, responsive user interface and a robust backend to handle products, users, orders, and payments.
 
 ### Key Features
 - **User Authentication**: Secure login and registration.

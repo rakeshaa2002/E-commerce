@@ -19,12 +19,12 @@ function Header() {
 
   return (
     <header>
-      <Navbar variant="dark" expand="lg" collapseOnSelect className="navbar fixed-top">
+      <Navbar variant={isDarkMode ? "dark" : "light"} expand="lg" collapseOnSelect className="navbar fixed-top py-2">
         <Container>
           <LinkContainer to="/">
             <Navbar.Brand>
               <i className="fas fa-play-circle text-primary me-2"></i>
-              <span className="fw-bold">WatchKart</span>
+              <span className="fw-bold">VibeKart</span>
             </Navbar.Brand>
           </LinkContainer>
 
@@ -32,6 +32,20 @@ function Header() {
 
           <Navbar.Collapse id="navbarScroll">
             <SearchBox />
+
+            <Nav className="mx-auto my-2 my-lg-0 flex-grow-1 justify-content-center">
+              <LinkContainer to="/history" className="mx-2">
+                <Nav.Link>
+                  <i className="fas fa-history"></i> Order History
+                </Nav.Link>
+              </LinkContainer>
+
+              <LinkContainer to="/track" className="mx-2">
+                <Nav.Link>
+                  <i className="fas fa-truck"></i> Track Order
+                </Nav.Link>
+              </LinkContainer>
+            </Nav>
 
             <Nav
               className="ms-auto my-2 my-lg-0 align-items-center"
@@ -44,17 +58,7 @@ function Header() {
                 </Nav.Link>
               </LinkContainer>
 
-              <LinkContainer to="/history">
-                <Nav.Link>
-                  <i className="fas fa-history"></i> Order History
-                </Nav.Link>
-              </LinkContainer>
 
-              <LinkContainer to="/track">
-                <Nav.Link>
-                  <i className="fas fa-truck"></i> Track Order
-                </Nav.Link>
-              </LinkContainer>
 
               {userInfo ? (
                 <NavDropdown title={userInfo.name} id="username">
