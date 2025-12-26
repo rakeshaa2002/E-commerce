@@ -1,5 +1,4 @@
 <h1 align="center">VibeKart</h1>
-<h2 align="center">High-Quality Watches for Everyone</h2>
 
 <p align="center">
   A premium E-Commerce platform built with the power of Django and React.
