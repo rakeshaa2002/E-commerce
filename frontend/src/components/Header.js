@@ -1,30 +1,17 @@
-import React from "react";
 
-/* REACT BOOTSTRAP */
+import React, { useContext } from "react";
 import { Navbar, Nav, Container, NavDropdown } from "react-bootstrap";
-
-/* REACT ROUTER BOOTSTRAP */
 import { LinkContainer } from "react-router-bootstrap";
-
-/* REACT - REDUX */
 import { useDispatch, useSelector } from "react-redux";
-
-/* ACTION CREATORS */
 import { logout } from "../actions/userActions";
-
-/* COMPONENTS */
 import SearchBox from "./SearchBox";
-
-import logo from "../logo.png";
+import ThemeContext from "./ThemeContext";
 
 function Header() {
-  /* PULLING A PART OF STATE FROM THE ACTUAL STATE IN THE REDUX STORE */
   const userLogin = useSelector((state) => state.userLogin);
-
   const { userInfo } = userLogin;
-
-  /* HANDLER */
   const dispatch = useDispatch();
+  const { isDarkMode, toggleTheme } = useContext(ThemeContext);
 
   const logoutHandler = () => {
     dispatch(logout());
@@ -32,11 +19,12 @@ function Header() {
 
   return (
     <header>
-      <Navbar bg="dark" variant="dark" expand="lg" collapseOnSelect>
+      <Navbar variant="dark" expand="lg" collapseOnSelect className="navbar fixed-top">
         <Container>
           <LinkContainer to="/">
             <Navbar.Brand>
-              <img src={logo} alt="Otaku Shop" />
+              <i className="fas fa-play-circle text-primary me-2"></i>
+              <span className="fw-bold">WatchKart</span>
             </Navbar.Brand>
           </LinkContainer>
 
@@ -46,7 +34,7 @@ function Header() {
             <SearchBox />
 
             <Nav
-              className="ms-auto my-2 my-lg-0"
+              className="ms-auto my-2 my-lg-0 align-items-center"
               style={{ maxHeight: "100px" }}
               navbarScroll
             >
@@ -56,10 +44,30 @@ function Header() {
                 </Nav.Link>
               </LinkContainer>
 
+              <LinkContainer to="/history">
+                <Nav.Link>
+                  <i className="fas fa-history"></i> Order History
+                </Nav.Link>
+              </LinkContainer>
+
+              <LinkContainer to="/track">
+                <Nav.Link>
+                  <i className="fas fa-truck"></i> Track Order
+                </Nav.Link>
+              </LinkContainer>
+
               {userInfo ? (
                 <NavDropdown title={userInfo.name} id="username">
                   <LinkContainer to="/profile">
                     <NavDropdown.Item>Profile</NavDropdown.Item>
+                  </LinkContainer>
+
+                  <LinkContainer to="/history">
+                    <NavDropdown.Item>Order History</NavDropdown.Item>
+                  </LinkContainer>
+
+                  <LinkContainer to="/track">
+                    <NavDropdown.Item>Track Order</NavDropdown.Item>
                   </LinkContainer>
 
                   <NavDropdown.Item onClick={logoutHandler}>
@@ -89,6 +97,16 @@ function Header() {
                   </LinkContainer>
                 </NavDropdown>
               )}
+
+              {/* Theme Toggle */}
+              <div
+                className="theme-toggle"
+                onClick={toggleTheme}
+                title={isDarkMode ? "Switch to Light Mode" : "Switch to Dark Mode"}
+              >
+                <i className={isDarkMode ? "fas fa-sun text-warning" : "fas fa-moon text-dark"}></i>
+              </div>
+
             </Nav>
           </Navbar.Collapse>
         </Container>

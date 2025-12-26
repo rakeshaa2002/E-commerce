@@ -2,6 +2,9 @@
 import { Container } from "react-bootstrap";
 
 /* COMPONENTS */
+import { ThemeProvider } from "./components/ThemeContext";
+
+/* COMPONENTS */
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import HomeScreen from "./screens/HomeScreen";
@@ -19,49 +22,57 @@ import UserEditScreen from "./screens/UserEditScreen";
 import ProductListScreen from "./screens/ProductListScreen";
 import ProductEditScreen from "./screens/ProductEditScreen";
 import OrderListScreen from "./screens/OrderListScreen";
+import TrackOrderScreen from "./screens/TrackOrderScreen";
+import OrderHistoryScreen from "./screens/OrderHistoryScreen";
 
 /* REACT ROUTER */
 import { HashRouter as Router, Route } from "react-router-dom";
 
 function App() {
   return (
-    <Router>
-      <Header />
-      <Container>
-        <main className="py-3">
-          <Route exact path="/" component={HomeScreen} />
+    <ThemeProvider>
+      <Router>
+        <Header />
+        <Container>
+          <main className="py-3">
+            <Route exact path="/" component={HomeScreen} />
 
-          <Route path="/login" component={LoginScreen} />
+            <Route path="/login" component={LoginScreen} />
 
-          <Route path="/register" component={RegisterScreen} />
+            <Route path="/register" component={RegisterScreen} />
 
-          <Route path="/profile" component={ProfileScreen} />
+            <Route path="/profile" component={ProfileScreen} />
 
-          <Route path="/shipping" component={ShippingScreen} />
+            <Route path="/shipping" component={ShippingScreen} />
 
-          <Route path="/payment" component={PaymentScreen} />
+            <Route path="/payment" component={PaymentScreen} />
 
-          <Route path="/placeorder" component={PlaceOrderScreen} />
+            <Route path="/placeorder" component={PlaceOrderScreen} />
 
-          <Route path="/order/:id" component={OrderScreen} />
+            <Route path="/order/:id" component={OrderScreen} />
 
-          <Route path="/product/:id" component={ProductScreen} />
+            <Route path="/track" component={TrackOrderScreen} />
 
-          <Route path="/cart/:id?" component={CartScreen} />
+            <Route path="/history" component={OrderHistoryScreen} />
 
-          <Route path="/admin/userlist" component={UserListScreen} />
+            <Route path="/product/:id" component={ProductScreen} />
 
-          <Route path="/admin/user/:id/edit" component={UserEditScreen} />
+            <Route path="/cart/:id?" component={CartScreen} />
 
-          <Route path="/admin/product/:id/edit" component={ProductEditScreen} />
+            <Route path="/admin/userlist" component={UserListScreen} />
 
-          <Route path="/admin/productlist" component={ProductListScreen} />
+            <Route path="/admin/user/:id/edit" component={UserEditScreen} />
 
-          <Route path="/admin/orderlist" component={OrderListScreen} />
-        </main>
-      </Container>
-      <Footer />
-    </Router>
+            <Route path="/admin/product/:id/edit" component={ProductEditScreen} />
+
+            <Route path="/admin/productlist" component={ProductListScreen} />
+
+            <Route path="/admin/orderlist" component={OrderListScreen} />
+          </main>
+        </Container>
+        <Footer />
+      </Router>
+    </ThemeProvider>
   );
 }
 

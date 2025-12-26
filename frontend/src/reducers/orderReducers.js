@@ -22,6 +22,10 @@ import {
   ORDER_DELIVER_SUCCESS,
   ORDER_DELIVER_FAIL,
   ORDER_DELIVER_RESET,
+  ORDER_SHIP_REQUEST,
+  ORDER_SHIP_SUCCESS,
+  ORDER_SHIP_FAIL,
+  ORDER_SHIP_RESET,
 } from "../constants/orderConstants";
 
 /* REDUCER USED IN PlaceOrder COMPONENT */
@@ -185,6 +189,33 @@ export const orderDeliverReducer = (state = {}, action) => {
       };
 
     case ORDER_DELIVER_RESET:
+      return {};
+
+    default:
+      return state;
+  }
+};
+/* REDUCER USED IN OrderScreen COMPONENT TO MAKE STATUS OF SHIPMENT */
+export const orderShipReducer = (state = {}, action) => {
+  switch (action.type) {
+    case ORDER_SHIP_REQUEST:
+      return {
+        loading: true,
+      };
+
+    case ORDER_SHIP_SUCCESS:
+      return {
+        loading: false,
+        success: true,
+      };
+
+    case ORDER_SHIP_FAIL:
+      return {
+        loading: false,
+        error: action.payload,
+      };
+
+    case ORDER_SHIP_RESET:
       return {};
 
     default:

@@ -54,9 +54,9 @@ function CartScreen({ match, location, history }) {
   };
 
   return (
-    <Row>
+    <Row className="justify-content-center">
       <Col md={8}>
-        <h1>Shopping Cart</h1>
+        <h1 className="text-center mb-4">Shopping Cart</h1>
         {cartItems.length === 0 ? (
           <Message variant="info">
             Your cart is empty. <Link to="/">Go Back</Link>
@@ -64,19 +64,19 @@ function CartScreen({ match, location, history }) {
         ) : (
           <ListGroup variant="flush">
             {cartItems.map((item) => (
-              <ListGroup.Item key={item.product}>
-                <Row>
+              <ListGroup.Item key={item.product} className="mb-3 rounded">
+                <Row className="align-items-center">
                   <Col md={2}>
                     <Image src={item.image} alt={item.name} fluid rounded />
                   </Col>
 
-                  <Col m={3}>
+                  <Col md={4}>
                     <Link to={`/product/${item.product}`}>{item.name}</Link>
                   </Col>
 
-                  <Col>₹{item.price}</Col>
+                  <Col md={2}>₹{item.price}</Col>
 
-                  <Col md={3}>
+                  <Col md={2}>
                     <Form.Control
                       as="select"
                       value={item.qty}
@@ -94,10 +94,11 @@ function CartScreen({ match, location, history }) {
                     </Form.Control>
                   </Col>
 
-                  <Col md={1}>
+                  <Col md={2} className="text-right">
                     <Button
                       type="button"
-                      variant="light"
+                      variant="outline-danger"
+                      size="sm"
                       onClick={() => removeFromCartHandler(item.product)}
                     >
                       <i className="fas fa-trash"></i>
@@ -110,31 +111,33 @@ function CartScreen({ match, location, history }) {
         )}
       </Col>
 
-      <Col md={4}>
-        <Card>
+      <Col md={8} className="mt-5 pt-4">
+        <Card className="text-center p-3">
           <ListGroup variant="flush">
             <ListGroup.Item>
               <h2>
                 Subtotal ({cartItems.reduce((acc, item) => acc + item.qty, 0)})
                 items
               </h2>
-              ₹
-              {cartItems
-                .reduce((acc, item) => acc + item.qty * item.price, 0)
-                .toFixed(2)}
+              <div className="h3 mt-2">
+                ₹
+                {cartItems
+                  .reduce((acc, item) => acc + item.qty * item.price, 0)
+                  .toFixed(2)}
+              </div>
+            </ListGroup.Item>
+
+            <ListGroup.Item>
+              <Button
+                type="button"
+                className="w-100 btn-lg"
+                disabled={cartItems.length === 0}
+                onClick={checkoutHandler}
+              >
+                PROCEED TO CHECKOUT
+              </Button>
             </ListGroup.Item>
           </ListGroup>
-
-          <ListGroup.Item>
-            <Button
-              type="button"
-              className="w-100"
-              disabled={cartItems.length === 0}
-              onClick={checkoutHandler}
-            >
-              Proceed To Checkout
-            </Button>
-          </ListGroup.Item>
         </Card>
       </Col>
     </Row>

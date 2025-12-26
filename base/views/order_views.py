@@ -126,3 +126,27 @@ def updateOrderToDelivered(request, pk):
     order.deliveredAt = datetime.now()
     order.save()
     return Response('Order was Delivered')
+
+@api_view(['PUT'])
+@permission_classes([IsAdminUser])
+def updateOrderToShipped(request, pk):
+    order = Order.objects.get(_id=pk)
+    data = request.data
+    
+    order.isShipped = True
+    order.shippedAt = datetime.now()
+    order.trackingNumber = data.get('trackingNumber', '')
+    order.save()
+    
+    return Response('Order was Shipped')
+
+@api_view(['POST'])
+def orderWebhook(request):
+    data = request.data
+    # For now, just log the webhook data
+    print("WEBHOOK RECEIVED:", data)
+    
+    # Logic to handle different event types (e.g. PayPal checkout.order.approved)
+    # This is a generic placeholder
+    
+    return Response('Webhook received', status=status.HTTP_200_OK)

@@ -81,8 +81,8 @@ function PlaceOrderScreen({ history }) {
     <div>
       <CheckoutSteps step1 step2 step3 step4 />
 
-      <Row>
-        <Col md={8}>
+      <Row className="justify-content-center">
+        <Col md={10}>
           <ListGroup variant="flush">
             <ListGroup.Item>
               <h2>Shipping</h2>
@@ -113,7 +113,7 @@ function PlaceOrderScreen({ history }) {
                 <ListGroup variant="flush">
                   {cart.cartItems.map((item, index) => (
                     <ListGroup.Item key={index}>
-                      <Row>
+                      <Row className="align-items-center">
                         <Col md={1}>
                           <Image
                             src={item.image}
@@ -129,7 +129,7 @@ function PlaceOrderScreen({ history }) {
                           </Link>
                         </Col>
 
-                        <Col md={4}>
+                        <Col md={4} className="text-right">
                           {item.qty} X ₹{item.price} = ₹
                           {(item.qty * item.price).toFixed(2)}
                         </Col>
@@ -142,10 +142,10 @@ function PlaceOrderScreen({ history }) {
           </ListGroup>
         </Col>
 
-        <Col md={4}>
-          <Card>
+        <Col md={6} className="mt-5 pt-4">
+          <Card className="p-3">
             <ListGroup variant="flush">
-              <ListGroup.Item>
+              <ListGroup.Item className="text-center">
                 <h2>Order Summary</h2>
               </ListGroup.Item>
 
@@ -153,7 +153,7 @@ function PlaceOrderScreen({ history }) {
                 <Row>
                   <Col>Items:</Col>
 
-                  <Col>₹{cart.itemsPrice}</Col>
+                  <Col className="text-right">₹{cart.itemsPrice}</Col>
                 </Row>
               </ListGroup.Item>
 
@@ -161,7 +161,7 @@ function PlaceOrderScreen({ history }) {
                 <Row>
                   <Col>Shipping:</Col>
 
-                  <Col>₹{cart.shippingPrice}</Col>
+                  <Col className="text-right">₹{cart.shippingPrice}</Col>
                 </Row>
               </ListGroup.Item>
 
@@ -169,15 +169,15 @@ function PlaceOrderScreen({ history }) {
                 <Row>
                   <Col>Tax:</Col>
 
-                  <Col>₹{cart.taxPrice}</Col>
+                  <Col className="text-right">₹{cart.taxPrice}</Col>
                 </Row>
               </ListGroup.Item>
 
               <ListGroup.Item>
                 <Row>
-                  <Col>Total:</Col>
+                  <Col className="h4">Total:</Col>
 
-                  <Col>₹{cart.totalPrice}</Col>
+                  <Col className="text-right h4">₹{cart.totalPrice}</Col>
                 </Row>
               </ListGroup.Item>
 
@@ -188,11 +188,11 @@ function PlaceOrderScreen({ history }) {
               <ListGroup.Item>
                 <Button
                   type="button"
-                  className="w-100"
+                  className="w-100 btn-lg"
                   disabled={cart.cartItems === 0}
                   onClick={placeorder}
                 >
-                  Place Order
+                  PLACE ORDER
                 </Button>
               </ListGroup.Item>
             </ListGroup>

@@ -44,6 +44,12 @@ class Order(models.Model):
     paidAt = models.DateTimeField(auto_now_add=False,null=True, blank=True)
     isDeliver = models.BooleanField(default=False)
     deliveredAt = models.DateTimeField(auto_now_add=False,null=True, blank=True)
+    
+    # New tracking fields
+    isShipped = models.BooleanField(default=False)
+    shippedAt = models.DateTimeField(auto_now_add=False,null=True, blank=True)
+    trackingNumber = models.CharField(max_length=200,null=True,blank=True)
+
     createdAt = models.DateTimeField(auto_now_add=True,null=True, blank=True)
     _id =  models.AutoField(primary_key=True,editable=False)
 

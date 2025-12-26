@@ -21,12 +21,14 @@ import {
   getOrderDetails,
   payOrder,
   deliverOrder,
+  shipOrder,
 } from "../actions/orderActions";
 
 /* ACTION TYPES */
 import {
   ORDER_PAY_RESET,
   ORDER_DELIVER_RESET,
+  ORDER_SHIP_RESET,
 } from "../constants/orderConstants";
 
 function OrderScreen({ history, match }) {
@@ -35,6 +37,7 @@ function OrderScreen({ history, match }) {
   const dispatch = useDispatch();
 
   const [sdkReady, setSdkReady] = useState(false);
+  const [trackingNumber, setTrackingNumber] = useState("");
 
   /* PULLING A PART OF STATE FROM THE ACTUAL STATE IN THE REDUX STORE */
   const orderDetails = useSelector((state) => state.orderDetails);
@@ -45,6 +48,9 @@ function OrderScreen({ history, match }) {
 
   const orderDeliver = useSelector((state) => state.orderDeliver);
   const { loading: loadingDeliver, success: successDeliver } = orderDeliver;
+
+  const orderShip = useSelector((state) => state.orderShip);
+  const { loading: loadingShip, success: successShip } = orderShip;
 
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
@@ -80,11 +86,12 @@ function OrderScreen({ history, match }) {
       !order ||
       successPay ||
       order._id !== Number(orderId) ||
-      successDeliver
+      successDeliver ||
+      successShip
     ) {
       dispatch({ type: ORDER_PAY_RESET });
-
       dispatch({ type: ORDER_DELIVER_RESET });
+      dispatch({ type: ORDER_SHIP_RESET });
 
       dispatch(getOrderDetails(orderId));
     } else if (!order.isPaid) {
@@ -104,6 +111,10 @@ function OrderScreen({ history, match }) {
 
   const deliverHandler = () => {
     dispatch(deliverOrder(order));
+  };
+
+  const shipHandler = () => {
+    dispatch(shipOrder(order, trackingNumber));
   };
 
   return loading ? (
@@ -145,6 +156,19 @@ function OrderScreen({ history, match }) {
               ) : (
                 <Message variant="warning">Not Delivered</Message>
               )}
+
+              {order.isShipped ? (
+                <Message variant="success">
+                  Shipped on{" "}
+                  {order.shippedAt
+                    ? order.shippedAt.substring(0, 10)
+                    : null}
+                  (Tracking: {order.trackingNumber})
+                </Message>
+              ) : (
+                <Message variant="warning">Not Shipped</Message>
+              )}
+
             </ListGroup.Item>
 
             <ListGroup.Item>
@@ -244,6 +268,15 @@ function OrderScreen({ history, match }) {
               {!order.isPaid && (
                 <ListGroup.Item>
                   {loadingPay && <Loader />}
+
+                  <Button
+                    type="button"
+                    className="btn w-100 mb-2"
+                    onClick={() => successPaymentHandler({ id: 'MOCK_PAYMENT_ID', status: 'COMPLETED', update_time: new Date().toISOString() })}
+                  >
+                    Test Pay (Mock)
+                  </Button>
+
                   {!sdkReady ? (
                     <Loader />
                   ) : (
@@ -256,9 +289,30 @@ function OrderScreen({ history, match }) {
               )}
             </ListGroup>
 
-            {loadingDeliver && <Loader />}
+            {userInfo && userInfo.isAdmin && order.isPaid && !order.isShipped && (
+              <ListGroup.Item>
+                <Row className="mb-2">
+                  <Col>
+                    <input
+                      type="text"
+                      className="form-control"
+                      placeholder="Enter Tracking Number"
+                      value={trackingNumber}
+                      onChange={(e) => setTrackingNumber(e.target.value)}
+                    />
+                  </Col>
+                </Row>
+                <Button
+                  type="button"
+                  className="btn w-100"
+                  onClick={shipHandler}
+                >
+                  Mark As Shipped
+                </Button>
+              </ListGroup.Item>
+            )}
 
-            {userInfo && userInfo.isAdmin && order.isPaid && !order.isDeliver && (
+            {userInfo && userInfo.isAdmin && order.isPaid && order.isShipped && !order.isDeliver && (
               <ListGroup.Item>
                 <Button
                   type="button"

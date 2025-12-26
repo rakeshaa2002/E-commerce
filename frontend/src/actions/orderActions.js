@@ -21,6 +21,9 @@ import {
   ORDER_DELIVER_REQUEST,
   ORDER_DELIVER_SUCCESS,
   ORDER_DELIVER_FAIL,
+  ORDER_SHIP_REQUEST,
+  ORDER_SHIP_SUCCESS,
+  ORDER_SHIP_FAIL,
 } from "../constants/orderConstants";
 
 import { CART_CLEAR_ITEMS } from "../constants/cartConstants";
@@ -261,6 +264,44 @@ export const deliverOrder = (order) => async (dispatch, getState) => {
   } catch (error) {
     dispatch({
       type: ORDER_DELIVER_FAIL,
+      payload:
+        error.response && error.response.data.detail
+          ? error.response.data.detail
+          : error.message,
+    });
+  }
+};
+/* ACTION CREATOR USED IN MARKING SHIPPING STATUS OF ORDERS IN OrderScreen COMPONENT  */
+export const shipOrder = (order, trackingNumber) => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: ORDER_SHIP_REQUEST,
+    });
+
+    const {
+      userLogin: { userInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        "Content-type": "application/json",
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+
+    const { data } = await axios.put(
+      `/api/orders/${order._id}/shipped/`,
+      { trackingNumber },
+      config
+    );
+
+    dispatch({
+      type: ORDER_SHIP_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: ORDER_SHIP_FAIL,
       payload:
         error.response && error.response.data.detail
           ? error.response.data.detail

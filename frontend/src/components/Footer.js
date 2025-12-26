@@ -8,7 +8,7 @@ function Footer() {
     <footer>
       <Container>
         <Row>
-          <Col className="text-center py-3"> </Col>
+          <Col className="text-center py-3">Copyright &copy; Rakesh</Col>
         </Row>
       </Container>
     </footer>

@@ -8,6 +8,8 @@ urlpatterns = [
     path('myorders/',views.getMyOrders,name="myorders"),
 
     path('<str:pk>/deliver/',views.updateOrderToDelivered,name="delivered"),
+    path('<str:pk>/shipped/',views.updateOrderToShipped,name="shipped"),
+    path('webhook/',views.orderWebhook,name="order-webhook"),
     path('<str:pk>/',views.getOrderById,name="user-order"),
     path('<str:pk>/pay/',views.updateOrderToPaid,name="pay"),
 ]

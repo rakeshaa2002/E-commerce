@@ -1,0 +1,46 @@
+version: '3.8'
+
+services:
+  db:
+    image: mysql:8.0
+    restart: always
+    environment:
+      MYSQL_DATABASE: 'ecommerce_db'
+      MYSQL_USER: 'Rakesh'
+      MYSQL_PASSWORD: 'since2002'
+      MYSQL_ROOT_PASSWORD: 'rootpassword'
+    ports:
+      - '3307:3306'
+    volumes:
+      - db_data:/var/lib/mysql
+
+  backend:
+    build: .
+    command: sh -c "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    environment:
+      - DB_ENGINE=django.db.backends.mysql
+      - DB_NAME=ecommerce_db
+      - DB_USER=Rakesh
+      - DB_PASSWORD=since2002
+      - DB_HOST=db
+      - DB_PORT=3306
+
+  frontend:
+    build: ./frontend
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    ports:
+      - "3000:3000"
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+    stdin_open: true
+
+volumes:
+  db_data:
